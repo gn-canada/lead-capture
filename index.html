@@ -49,8 +49,16 @@ textarea{min-height:80px;resize:none}
 .tags{display:flex;flex-wrap:wrap;gap:8px}
 .tag{padding:6px 12px;border-radius:999px;border:1px solid var(--border);cursor:pointer;font-size:13px}
 .tag.active{background:var(--accent);color:white;border-color:var(--accent)}
-.stars{display:flex;gap:6px;font-size:22px;cursor:pointer}
-.star.active{color:#f59e0b}
+.stars span {
+  font-size: 22px;
+  cursor: pointer;
+  color: #6b7280; /* gray default */
+  transition: color 0.2s;
+}
+
+.stars span.active {
+  color: #f59e0b; /* gold */
+}
 button{
   margin-top:20px;width:100%;padding:14px;border:none;
   border-radius:12px;background:var(--primary);
