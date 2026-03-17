@@ -92,16 +92,21 @@ textarea{min-height:80px;resize:none}
   border: 1px solid #ccc;
 }
 
+/* MOBILE FIX */
 @media (max-width: 600px) {
   .wholesalers-group {
-    flex-direction: column;  /* stack all labels vertically */
+    flex-direction: column;      /* stack checkboxes vertically */
+    gap: 8px;                     /* smaller gap for mobile */
   }
+  
   .wholesalers-group label {
-    width: 100%;             /* full width on mobile */
+    width: 100%;                 /* full width labels */
     justify-content: flex-start; /* keep text tight to checkbox */
   }
+
   .wholesalers-group input[type=text] {
-    max-width: 100%;         /* text input fills width */
+    max-width: 100%;             /* fill available width */
+    flex: 1;                     /* expand to container width */
   }
 }
 .wholesalers-group input[type=text] {
