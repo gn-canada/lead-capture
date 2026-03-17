@@ -92,35 +92,44 @@ textarea{min-height:80px;resize:none}
   border: 1px solid #ccc;
 }
 
-/* MOBILE FIX */
-/* Mobile styles */
 @media (max-width: 600px) {
 
-  .wholesalers-group {
-    gap: 10px;
-  }
-
   .wholesalers-group label {
-    width: 100%;               /* full-width pills */
-    justify-content: flex-start;
-    padding: 10px 14px;        /* bigger tap area */
+    display: flex;                 /* ensure checkbox + text stay together */
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 14px;
     font-size: 15px;
     border-radius: 16px;
+    box-sizing: border-box;        /* prevents overflow */
+  }
+
+  .wholesalers-group label input[type=checkbox] {
+    flex: 0 0 auto;                /* checkbox stays fixed size */
+  }
+
+  .wholesalers-group label span,
+  .wholesalers-group label p,
+  .wholesalers-group label div {
+    flex: 1 1 auto;                /* text stays inside label */
+    white-space: nowrap;           /* optional: prevents wrapping */
   }
 
   .wholesaler-others {
-    flex-direction: column;    /* stack label + input */
+    flex-direction: column;
     align-items: stretch;
     gap: 8px;
   }
 
   .wholesaler-others input[type=text] {
     width: 100%;
-    font-size: 15px;
     padding: 10px 12px;
+    font-size: 15px;
     border-radius: 14px;
   }
 }
+
 
 .wholesalers-group input[type=text] {
   margin-left: 5px;
