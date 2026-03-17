@@ -94,26 +94,28 @@ textarea{min-height:80px;resize:none}
 
 @media (max-width: 600px) {
 
+  .wholesalers-group {
+    display: flex;
+    flex-direction: column;   /* stack neatly */
+    gap: 10px;
+  }
+
   .wholesalers-group label {
-    display: flex;                 /* ensure checkbox + text stay together */
+    display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
     padding: 12px 14px;
     font-size: 15px;
     border-radius: 16px;
-    box-sizing: border-box;        /* prevents overflow */
+    box-sizing: border-box;
+    overflow: hidden;         /* prevents text from spilling out */
+    white-space: nowrap;      /* keeps text inside the pill */
   }
 
   .wholesalers-group label input[type=checkbox] {
-    flex: 0 0 auto;                /* checkbox stays fixed size */
-  }
-
-  .wholesalers-group label span,
-  .wholesalers-group label p,
-  .wholesalers-group label div {
-    flex: 1 1 auto;                /* text stays inside label */
-    white-space: nowrap;           /* optional: prevents wrapping */
+    flex-shrink: 0;           /* checkbox stays fixed size */
+    margin: 0;
   }
 
   .wholesaler-others {
@@ -129,6 +131,7 @@ textarea{min-height:80px;resize:none}
     border-radius: 14px;
   }
 }
+
 
 
 .wholesalers-group input[type=text] {
