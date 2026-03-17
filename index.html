@@ -93,41 +93,35 @@ textarea{min-height:80px;resize:none}
 }
 
 /* MOBILE FIX */
+/* Mobile styles */
 @media (max-width: 600px) {
-  /* Stack checkboxes vertically but keep pill style */
+
   .wholesalers-group {
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-    box-sizing: border-box;
+    gap: 10px;
   }
 
-  /* Make each label stay tight with checkbox */
   .wholesalers-group label {
-    width: 100%;              /* fill container */
-    justify-content: flex-start; 
-    flex: none;               /* prevent stretching weirdly */
-    white-space: nowrap;      /* keep text on same line */
-    overflow: hidden;         /* text stays inside container */
-    text-overflow: ellipsis;  /* cut off if too long */
+    width: 100%;               /* full-width pills */
+    justify-content: flex-start;
+    padding: 10px 14px;        /* bigger tap area */
+    font-size: 15px;
+    border-radius: 16px;
   }
 
-  /* Others input fills remaining space nicely */
   .wholesaler-others {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;          /* wrap input if needed */
+    flex-direction: column;    /* stack label + input */
+    align-items: stretch;
+    gap: 8px;
   }
 
   .wholesaler-others input[type=text] {
-    flex: 1 1 auto;           /* expand to fit container */
-    min-width: 80px;          /* stay usable */
-    max-width: 100%;
-    box-sizing: border-box;
+    width: 100%;
+    font-size: 15px;
+    padding: 10px 12px;
+    border-radius: 14px;
   }
 }
+
 .wholesalers-group input[type=text] {
   margin-left: 5px;
   padding: 4px 6px;
