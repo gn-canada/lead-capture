@@ -22,9 +22,10 @@ body{
 }
 .container{
   max-width:600px;
-  margin:40px auto;
-  padding:20px;
+  margin:0px auto;
+  padding:0px;
 }
+
 .card{
   background:var(--card);
   border-radius:16px;
@@ -38,7 +39,7 @@ h1{font-size:22px;margin-bottom:5px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .full{grid-template-columns:1fr}
 input,select,textarea{
-  padding:12px;border:1px solid var(--border);
+  padding:12px;margin: 2px; border:1px solid var(--border);
   border-radius:10px;font-size:14px;width:100%
 }
 input:focus,select:focus,textarea:focus{
@@ -61,6 +62,68 @@ textarea{min-height:80px;resize:none}
 .stars span.active {
   color: #f59e0b; /* gold */
 }
+.header-center {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.2rem; /* space below logo */
+}
+
+.header-center .logo {
+  max-height: 180px; /* bigger */
+  width: auto;       /* maintain aspect ratio */
+  object-fit: contain;
+}
+
+.wholesalers-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.wholesalers-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 20px; /* pill-shaped */
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+.wholesalers-group input[type=text] {
+  margin-left: 5px;
+  padding: 4px 6px;
+  font-size: 13px;
+  border-radius: 12px; /* rounded like pill */
+  border: 1px solid #ccc;
+  max-width: 150px;
+}
+
+.wholesaler-others input[type=text] {
+  flex-shrink: 0;
+}
+.browse-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.browse-btn {
+  max-width: 250px;
+  padding: 12px 18px;
+  font-size: 16px;
+}
+.header h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.logo {
+  max-height: 50px;
+  object-fit: contain;
+}
 button{
   margin-top:20px;width:100%;padding:14px;border:none;
   border-radius:12px;background:var(--primary);
@@ -68,15 +131,28 @@ button{
 }
 button:hover{opacity:0.9}
 .success{display:none;text-align:center;padding:40px}
+
+@media (max-width: 600px) {
+  .header-center .logo {
+    max-height: 120px; /* smaller on mobile */
+  }
+}
 </style>
 </head>
+<div class="header-center">
+  <img src="GN_Canada_Logo.png" alt="Company Logo" class="logo">
+</div>
 <body>
 <div class="container">
 
 <div class="card" id="form">
 <h1>Lead Capture</h1>
 <p class="subtitle">Quickly save customer details</p>
-
+<div class="browse-btn-wrapper">
+  <a href="https://EXTERNAL_SITE_URL_HERE" target="_blank">
+    <button class="submit-btn browse-btn">Browse the 2026 Portfolio</button>
+  </a>
+</div>
 <div class="section">
 <div class="label">Contact</div>
 <div class="grid">
@@ -145,6 +221,18 @@ button:hover{opacity:0.9}
 </div>
 
 <div class="section">
+<div class="label">Which wholesalers do you work with?</div>
+<div class="wholesalers-group" id="wholesalers">
+  <label><input type="checkbox" value="CFS"> CFS</label>
+  <label><input type="checkbox" value="TRA"> TRA</label>
+  <label><input type="checkbox" value="CoreMark"> CoreMark</label>
+  <label class="wholesaler-others">
+    <input type="checkbox" value="Others" id="wholesaler-others-checkbox"> Others
+    <input type="text" id="wholesaler-other" placeholder="Specify other">
+  </label>
+</div>
+</div>
+<div class="section">
 <div class="label">Lead Rating</div>
 <div class="stars" id="stars">
 <span onclick="rate(1)">★</span>
@@ -198,7 +286,24 @@ function rate(n){
 }
 
 function submitForm() {
-  const interests = [...document.querySelectorAll('.tag.active')].map(t=>t.textContent).join(', ');
+  // Interests
+  const interests = [...document.querySelectorAll('.tag.active')].map(t => t.textContent).join(', ');
+
+  // Wholesalers
+  const wholesalerEls = document.querySelectorAll('#wholesalers input[type=checkbox]');
+  let wholesalers = [];
+  wholesalerEls.forEach(el => {
+    if (el.checked) {
+      if (el.value === "Others") {
+        const other = document.getElementById('wholesaler-other').value.trim();
+        if (other) wholesalers.push(other);
+      } else {
+        wholesalers.push(el.value);
+      }
+    }
+  });
+
+  // Lead object
   const lead = {
     name: document.getElementById('first').value + " " + document.getElementById('last').value,
     company: document.getElementById('company').value,
@@ -210,19 +315,24 @@ function submitForm() {
     province: document.getElementById('province').value,
     timeline: document.getElementById('timeline').value,
     interests,
+     wholesalers: wholesalers.join(', '),
     rating,
     followup: document.getElementById('followup').value,
     notes: document.getElementById('notes').value
   };
 
+  // Build URL with ? before params
   const params = new URLSearchParams(lead).toString();
-  fetch("https://script.google.com/macros/s/AKfycbyVlhE9ZgbG26v9zpxanMLMQN-GwGbCohDRrYI6UXsnVzqrHV-NnKahGWZBAOF2OPCbyw/exec?"+params)
-    .then(res=>res.text())
-    .then(data=>console.log("Success:", data))
-    .catch(err=>console.error(err));
+  const url = "https://script.google.com/macros/s/AKfycbzrsje9rwFrcrO7Clgax3E0dwZeJEjNADdayy9mWMs5I-CqNTEloCpzI1drT7quoy06Cw/exec?" + params;
 
-  document.getElementById('form').style.display='none';
-  document.getElementById('success').style.display='block';
+  fetch(url)
+    .then(res => res.text())
+    .then(data => console.log("Success:", data))
+    .catch(err => console.error("Error:", err));
+
+  // Show success view
+  document.getElementById('form').style.display = 'none';
+  document.getElementById('success').style.display = 'block';
   document.getElementById('name').innerText = lead.name || lead.company;
 }
 
