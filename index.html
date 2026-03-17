@@ -95,18 +95,37 @@ textarea{min-height:80px;resize:none}
 /* MOBILE FIX */
 @media (max-width: 600px) {
   .wholesalers-group {
-    flex-direction: column;      /* stack checkboxes vertically */
-    gap: 8px;                     /* smaller gap for mobile */
+    flex-direction: column;   /* stack everything vertically */
+    gap: 8px;
+    width: 100%;              /* full container width */
+    box-sizing: border-box;   /* include padding */
   }
-  
+
   .wholesalers-group label {
-    width: 100%;                 /* full width labels */
-    justify-content: flex-start; /* keep text tight to checkbox */
+    width: 100%;              /* fill container */
+    justify-content: flex-start; /* checkbox + text aligned left */
+    box-sizing: border-box;    /* prevent overflow */
+    overflow: hidden;          /* clip long text if needed */
+    flex: none;                /* stop flex shrinking weirdly */
   }
 
   .wholesalers-group input[type=text] {
-    max-width: 100%;             /* fill available width */
-    flex: 1;                     /* expand to container width */
+    width: 100%;               /* fill remaining width */
+    max-width: 100%;           /* prevent overflow */
+    box-sizing: border-box;    /* include padding in width */
+  }
+
+  .wholesaler-others {
+    width: 100%;               /* full line */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;           /* let input wrap if needed */
+  }
+
+  .wholesaler-others input[type=text] {
+    flex: 1 1 auto;            /* grow/shrink to fit container */
+    min-width: 80px;           /* keep usable typing width */
   }
 }
 .wholesalers-group input[type=text] {
