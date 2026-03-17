@@ -187,36 +187,35 @@ function rate(n){
   })
 }
 
-function submitForm(){
-  const interests=[...document.querySelectorAll('.tag.active')].map(t=>t.textContent).join(', ');
-
-  const lead={
-    name:document.getElementById('first').value+" "+document.getElementById('last').value,
-    company:document.getElementById('company').value,
-    title:document.getElementById('title').value,
-    email:document.getElementById('email').value,
-    phone:document.getElementById('phone').value,
-    retailerType:document.getElementById('retailerType').value,
-    locations:document.getElementById('locations').value,
-    province:document.getElementById('province').value,
-    timeline:document.getElementById('timeline').value,
+function submitForm() {
+  const interests = [...document.querySelectorAll('.tag.active')].map(t=>t.textContent).join(', ');
+  const lead = {
+    name: document.getElementById('first').value + " " + document.getElementById('last').value,
+    company: document.getElementById('company').value,
+    title: document.getElementById('title').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    retailerType: document.getElementById('retailerType').value,
+    locations: document.getElementById('locations').value,
+    province: document.getElementById('province').value,
+    timeline: document.getElementById('timeline').value,
     interests,
     rating,
-    followup:document.getElementById('followup').value,
-    notes:document.getElementById('notes').value,
-    timestamp:new Date().toISOString()
+    followup: document.getElementById('followup').value,
+    notes: document.getElementById('notes').value
   };
 
-  fetch("https://script.google.com/macros/s/AKfycbwBkCN-qGDhRI-Bchr7l_vaB-djXWYJGlxfokBMQ9nQ239Ux3zt6cbGmvRXap3-EANV5w/exec",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(lead)
-  });
+  const params = new URLSearchParams(lead).toString();
+  fetch("https://script.google.com/macros/s/AKfycbyVlhE9ZgbG26v9zpxanMLMQN-GwGbCohDRrYI6UXsnVzqrHV-NnKahGWZBAOF2OPCbyw/exec"+params)
+    .then(res=>res.text())
+    .then(data=>console.log("Success:", data))
+    .catch(err=>console.error(err));
 
   document.getElementById('form').style.display='none';
   document.getElementById('success').style.display='block';
-  document.getElementById('name').innerText=lead.name || lead.company;
+  document.getElementById('name').innerText = lead.name || lead.company;
 }
+
 
 function reset(){location.reload()}
 </script>
