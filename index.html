@@ -82,32 +82,35 @@ textarea{min-height:80px;resize:none}
 }
 
 .wholesalers-group label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;   /* centers checkbox + text */
+  gap: 8px;              /* space between checkbox and text */
   padding: 6px 12px;
-  border-radius: 20px; /* pill-shaped */
-  cursor: pointer;
+  border-radius: 20px;
   border: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-/* Mobile improvements */
+/* Make it mobile-friendly */
 @media (max-width: 600px) {
+
   .wholesalers-group label {
     width: 100%;          /* full-width pill */
-    display: flex;        /* ensures checkbox + text stay aligned */
+    display: flex;        /* ensures left alignment */
     align-items: center;
     gap: 10px;
     padding: 12px 14px;
     box-sizing: border-box;
-    white-space: nowrap;  /* prevents text from drifting out */
+    white-space: nowrap;  /* keeps text inside */
   }
 
   .wholesalers-group label input[type=checkbox] {
-    flex-shrink: 0;       /* checkbox never shrinks */
+    margin: 0;            /* remove browser default offset */
+    flex-shrink: 0;       /* checkbox stays fixed on the left */
   }
 }
+
 
 
 
