@@ -95,36 +95,39 @@ textarea{min-height:80px;resize:none}
 /* MOBILE FIX */
 @media (max-width: 600px) {
   .wholesalers-group {
-    flex-direction: column;   /* stack each checkbox vertically */
+    flex-direction: column;   /* stack checkboxes vertically */
     gap: 8px;
     width: 100%;
     box-sizing: border-box;
   }
 
   .wholesalers-group label {
-    display: flex;
-    align-items: center;      /* checkbox and text aligned vertically */
-    justify-content: flex-start;
-    width: 100%;              /* full width of container */
-    flex: none;               /* prevent shrinking weirdly */
-    overflow: hidden;         /* keep text inside */
+    display: inline-flex;       /* keep checkbox + text together */
+    align-items: center;
+    gap: 5px;                   /* space between checkbox and text */
+    justify-content: flex-start; /* text stays immediately after checkbox */
+    width: auto;                 /* let label size naturally */
+  }
+
+  .wholesalers-group input[type=checkbox] {
+    flex-shrink: 0;             /* checkbox stays normal size */
   }
 
   .wholesalers-group input[type=text] {
-    width: 100%;              /* full width for Others input */
+    width: 100%;                /* Others input fills container */
     max-width: 100%;
     box-sizing: border-box;
   }
 
   .wholesaler-others {
-    width: 100%;
     display: flex;
     align-items: center;
     gap: 6px;
+    width: 100%;
   }
 
   .wholesaler-others input[type=text] {
-    flex: 1 1 auto;
+    flex: 1 1 auto;             /* grow to fill line */
     min-width: 80px;
   }
 }
