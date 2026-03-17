@@ -1,179 +1,224 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead Capture</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); }
-.form-wrap { max-width: 560px; margin: 0 auto; padding: 1.5rem 1rem; }
-.section-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.06em; margin: 1.25rem 0 0.5rem; }
-.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-.row.full { grid-template-columns: 1fr; }
-input, select, textarea { width: 100%; padding: 10px 12px; font-size: 15px; font-family: var(--font-sans); background: var(--color-background-primary); color: var(--color-text-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); outline: none; }
-input:focus, select:focus, textarea:focus { border-color: var(--color-border-primary); box-shadow: 0 0 0 2px rgba(0,0,0,0.06); }
-textarea { resize: none; height: 72px; }
-.tag-group { display: flex; flex-wrap: wrap; gap: 8px; }
-.tag { padding: 7px 14px; font-size: 13px; border-radius: 999px; border: 0.5px solid var(--color-border-secondary); cursor: pointer; background: var(--color-background-primary); color: var(--color-text-secondary); transition: all 0.15s; user-select: none; }
-.tag.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
-.rating { display: flex; gap: 8px; }
-.star { font-size: 22px; cursor: pointer; color: var(--color-text-secondary); line-height: 1; }
-.star.on { color: #E9A320; }
-.submit-btn { width: 100%; margin-top: 1.25rem; padding: 13px; font-size: 15px; font-weight: 500; border-radius: var(--border-radius-md); border: none; background: var(--color-text-primary); color: var(--color-background-primary); cursor: pointer; }
-.submit-btn:active { opacity: 0.85; transform: scale(0.99); }
-.success { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 1rem; text-align: center; gap: 12px; min-height: 300px; }
-.check { width: 56px; height: 56px; border-radius: 50%; background: var(--color-background-success); display: flex; align-items: center; justify-content: center; }
-.check svg { width: 28px; height: 28px; stroke: var(--color-text-success); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-.divider { height: 0.5px; background: var(--color-border-tertiary); margin: 1rem 0 0; }
+:root {
+  --primary:#111;
+  --accent:#2563eb;
+  --bg:#f9fafb;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#111827;
+  --sub:#6b7280;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:var(--bg);
+  color:var(--text);
+}
+.container{
+  max-width:600px;
+  margin:40px auto;
+  padding:20px;
+}
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+h1{font-size:22px;margin-bottom:5px}
+.subtitle{font-size:14px;color:var(--sub);margin-bottom:20px}
+.section{margin-top:20px}
+.label{font-size:12px;text-transform:uppercase;color:var(--sub);margin-bottom:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.full{grid-template-columns:1fr}
+input,select,textarea{
+  padding:12px;border:1px solid var(--border);
+  border-radius:10px;font-size:14px;width:100%
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(37,99,235,0.15)
+}
+textarea{min-height:80px;resize:none}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:6px 12px;border-radius:999px;border:1px solid var(--border);cursor:pointer;font-size:13px}
+.tag.active{background:var(--accent);color:white;border-color:var(--accent)}
+.stars{display:flex;gap:6px;font-size:22px;cursor:pointer}
+.star.active{color:#f59e0b}
+button{
+  margin-top:20px;width:100%;padding:14px;border:none;
+  border-radius:12px;background:var(--primary);
+  color:white;font-size:15px;cursor:pointer
+}
+button:hover{opacity:0.9}
+.success{display:none;text-align:center;padding:40px}
 </style>
+</head>
+<body>
+<div class="container">
 
-<div class="form-wrap">
-  <div id="form-view">
-    <p class="section-label">Contact</p>
-    <div class="row">
-      <input type="text" id="first" placeholder="First name" />
-      <input type="text" id="last" placeholder="Last name" />
-    </div>
-    <div class="row">
-      <input type="text" id="company" placeholder="Company / store name" />
-      <input type="text" id="title" placeholder="Title" />
-    </div>
-    <div class="row">
-      <input type="email" id="email" placeholder="Email" />
-      <input type="tel" id="phone" placeholder="Phone" />
-    </div>
+<div class="card" id="form">
+<h1>Lead Capture</h1>
+<p class="subtitle">Quickly save customer details</p>
 
-    <div class="divider"></div>
-    <p class="section-label">Business info</p>
-    <div class="row">
-      <select id="retailer-type">
-        <option value="" disabled selected>Retailer type</option>
-        <option>Convenience</option>
-        <option>Gas station</option>
-        <option>Grocery</option>
-        <option>Pharmacy</option>
-        <option>Tobacco / vape shop</option>
-        <option>Other</option>
-      </select>
-      <select id="locations">
-        <option value="" disabled selected># of locations</option>
-        <option>1</option>
-        <option>2–5</option>
-        <option>6–20</option>
-        <option>21–50</option>
-        <option>50+</option>
-      </select>
-    </div>
-    <div class="row">
-      <select id="province">
-        <option value="" disabled selected>Province</option>
-        <option>AB</option><option>BC</option><option>MB</option><option>NB</option>
-        <option>NL</option><option>NS</option><option>ON</option><option>PE</option>
-        <option>QC</option><option>SK</option>
-      </select>
-      <select id="timeline">
-        <option value="" disabled selected>Purchase timeline</option>
-        <option>Ready now</option>
-        <option>Next 1–3 months</option>
-        <option>3–6 months</option>
-        <option>Just browsing</option>
-      </select>
-    </div>
+<div class="section">
+<div class="label">Contact</div>
+<div class="grid">
+<input id="first" placeholder="First name">
+<input id="last" placeholder="Last name">
+</div>
+<div class="grid">
+<input id="company" placeholder="Company / Store">
+<input id="title" placeholder="Title">
+</div>
+<div class="grid">
+<input id="email" placeholder="Email">
+<input id="phone" placeholder="Phone">
+</div>
+</div>
 
-    <div class="divider"></div>
-    <p class="section-label">Interests</p>
-    <div class="tag-group" id="interests">
-      <div class="tag" onclick="toggle(this)">Vaping</div>
-      <div class="tag" onclick="toggle(this)">Tobacco</div>
-      <div class="tag" onclick="toggle(this)">Nicotine pouches</div>
-      <div class="tag" onclick="toggle(this)">Accessories</div>
-      <div class="tag" onclick="toggle(this)">New brands</div>
-      <div class="tag" onclick="toggle(this)">Pricing</div>
-      <div class="tag" onclick="toggle(this)">Samples</div>
-    </div>
+<div class="section">
+<div class="label">Business Info</div>
+<div class="grid">
+<select id="retailerType">
+<option value="">Retailer Type</option>
+<option>Convenience</option>
+<option>Gas station</option>
+<option>Grocery</option>
+<option>Pharmacy</option>
+<option>Tobacco / vape shop</option>
+<option>Other</option>
+</select>
+<select id="locations">
+<option value=""># Locations</option>
+<option>1</option>
+<option>2–5</option>
+<option>6–20</option>
+<option>21–50</option>
+<option>50+</option>
+</select>
+</div>
+<div class="grid">
+<select id="province">
+<option value="">Province</option>
+<option>AB</option><option>BC</option><option>MB</option>
+<option>NB</option><option>NL</option><option>NS</option>
+<option>ON</option><option>PE</option><option>QC</option><option>SK</option>
+</select>
+<select id="timeline">
+<option value="">Purchase Timeline</option>
+<option>Ready now</option>
+<option>1–3 months</option>
+<option>3–6 months</option>
+<option>Browsing</option>
+</select>
+</div>
+</div>
 
-    <div class="divider"></div>
-    <p class="section-label">Lead rating</p>
-    <div class="rating" id="stars">
-      <span class="star" onclick="rate(1)">&#9733;</span>
-      <span class="star" onclick="rate(2)">&#9733;</span>
-      <span class="star" onclick="rate(3)">&#9733;</span>
-      <span class="star" onclick="rate(4)">&#9733;</span>
-      <span class="star" onclick="rate(5)">&#9733;</span>
-    </div>
+<div class="section">
+<div class="label">Interests</div>
+<div class="tags" id="tags">
+<div class="tag" onclick="toggle(this)">Vaping</div>
+<div class="tag" onclick="toggle(this)">Tobacco</div>
+<div class="tag" onclick="toggle(this)">Nicotine pouches</div>
+<div class="tag" onclick="toggle(this)">Accessories</div>
+<div class="tag" onclick="toggle(this)">New brands</div>
+<div class="tag" onclick="toggle(this)">Pricing</div>
+<div class="tag" onclick="toggle(this)">Samples</div>
+</div>
+</div>
 
-    <div class="divider"></div>
-    <p class="section-label">Follow-up action</p>
-    <div class="row full">
-      <select id="followup">
-        <option value="" disabled selected>Select next step</option>
-        <option>Send samples</option>
-        <option>Send pricing sheet</option>
-        <option>Schedule a call</option>
-        <option>Add to newsletter</option>
-        <option>No follow-up needed</option>
-      </select>
-    </div>
+<div class="section">
+<div class="label">Lead Rating</div>
+<div class="stars" id="stars">
+<span onclick="rate(1)">★</span>
+<span onclick="rate(2)">★</span>
+<span onclick="rate(3)">★</span>
+<span onclick="rate(4)">★</span>
+<span onclick="rate(5)">★</span>
+</div>
+</div>
 
-    <div class="divider"></div>
-    <p class="section-label">Rep notes</p>
-    <div class="row full">
-      <textarea id="notes" placeholder="Anything worth remembering from the conversation..."></textarea>
-    </div>
+<div class="section">
+<div class="label">Follow-up</div>
+<div class="grid full">
+<select id="followup">
+<option value="">Next Step</option>
+<option>Send samples</option>
+<option>Send pricing</option>
+<option>Schedule call</option>
+<option>Newsletter</option>
+<option>No follow-up</option>
+</select>
+</div>
+</div>
 
-    <button class="submit-btn" onclick="submitForm()">Save lead</button>
-  </div>
+<div class="section">
+<div class="label">Notes</div>
+<div class="grid full">
+<textarea id="notes" placeholder="Notes..."></textarea>
+</div>
+</div>
 
-  <div class="success" id="success-view">
-    <div class="check">
-      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <p style="font-size: 17px; font-weight: 500; color: var(--color-text-primary);">Lead saved</p>
-    <p style="font-size: 14px; color: var(--color-text-secondary);" id="saved-name"></p>
-    <button class="submit-btn" style="max-width: 200px;" onclick="resetForm()">New lead</button>
-  </div>
+<button onclick="submitForm()">Save Lead</button>
+</div>
+
+<div class="card success" id="success">
+<h2>✅ Lead Saved</h2>
+<p id="name"></p>
+<button onclick="reset()">New Lead</button>
+</div>
+
 </div>
 
 <script>
-let rating = 0;
-function toggle(el) { el.classList.toggle('active'); }
-function rate(n) {
-  rating = n;
-  document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('on', i < n));
+let rating=0;
+function toggle(el){el.classList.toggle('active')}
+function rate(n){
+  rating=n;
+  document.querySelectorAll('#stars span').forEach((s,i)=>{
+    s.classList.toggle('active',i<n)
+  })
 }
-function submitForm() {
-  const first = document.getElementById('first').value.trim();
-  const last = document.getElementById('last').value.trim();
-  const company = document.getElementById('company').value.trim();
-  if (!first && !last && !company) {
-    document.getElementById('first').focus();
-    return;
-  }
-  const interests = [...document.querySelectorAll('.tag.active')].map(t => t.textContent).join(', ');
-  const lead = {
-    name: `${first} ${last}`.trim(),
-    company,
-    title: document.getElementById('title').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    retailerType: document.getElementById('retailer-type').value,
-    locations: document.getElementById('locations').value,
-    province: document.getElementById('province').value,
-    timeline: document.getElementById('timeline').value,
+
+function submitForm(){
+  const interests=[...document.querySelectorAll('.tag.active')].map(t=>t.textContent).join(', ');
+
+  const lead={
+    name:document.getElementById('first').value+" "+document.getElementById('last').value,
+    company:document.getElementById('company').value,
+    title:document.getElementById('title').value,
+    email:document.getElementById('email').value,
+    phone:document.getElementById('phone').value,
+    retailerType:document.getElementById('retailerType').value,
+    locations:document.getElementById('locations').value,
+    province:document.getElementById('province').value,
+    timeline:document.getElementById('timeline').value,
     interests,
     rating,
-    followup: document.getElementById('followup').value,
-    notes: document.getElementById('notes').value,
-    timestamp: new Date().toISOString()
+    followup:document.getElementById('followup').value,
+    notes:document.getElementById('notes').value,
+    timestamp:new Date().toISOString()
   };
-  console.log('Lead captured:', JSON.stringify(lead, null, 2));
-  const name = [lead.name, lead.company].filter(Boolean).join(' — ');
-  document.getElementById('saved-name').textContent = name || 'Contact saved';
-  document.getElementById('form-view').style.display = 'none';
-  document.getElementById('success-view').style.display = 'flex';
+
+  fetch("https://script.google.com/macros/s/AKfycbwBkCN-qGDhRI-Bchr7l_vaB-djXWYJGlxfokBMQ9nQ239Ux3zt6cbGmvRXap3-EANV5w/exec",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(lead)
+  });
+
+  document.getElementById('form').style.display='none';
+  document.getElementById('success').style.display='block';
+  document.getElementById('name').innerText=lead.name || lead.company;
 }
-function resetForm() {
-  document.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
-  document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.star').forEach(s => s.classList.remove('on'));
-  rating = 0;
-  document.getElementById('form-view').style.display = 'block';
-  document.getElementById('success-view').style.display = 'none';
-}
+
+function reset(){location.reload()}
 </script>
+</body>
+</html>
