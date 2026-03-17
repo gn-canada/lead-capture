@@ -206,7 +206,7 @@ function submitForm() {
   };
 
   const params = new URLSearchParams(lead).toString();
-  fetch("https://script.google.com/macros/s/AKfycbyVlhE9ZgbG26v9zpxanMLMQN-GwGbCohDRrYI6UXsnVzqrHV-NnKahGWZBAOF2OPCbyw/exec"+params)
+  fetch("https://script.google.com/macros/s/AKfycbyVlhE9ZgbG26v9zpxanMLMQN-GwGbCohDRrYI6UXsnVzqrHV-NnKahGWZBAOF2OPCbyw/exec?"+params)
     .then(res=>res.text())
     .then(data=>console.log("Success:", data))
     .catch(err=>console.error(err));
