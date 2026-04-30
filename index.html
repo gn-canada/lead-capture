@@ -285,7 +285,21 @@ button:hover{opacity:0.9}
 <span onclick="rate(5)">★</span>
 </div>
 </div>
+<div class="section">
+  <div class="label">Place Order</div>
+  <p style="font-size:13px;color:#6b7280;margin-bottom:10px;">
+    Receive <strong>10% off your next Siberia inventory</strong> by placing an order before May 6th
+  </p>
 
+  <div class="grid full">
+    <input id="storeNumber" placeholder="Store #">
+  </div>
+
+  <div class="grid">
+    <input placeholder="Siberia Slim 13G (Cartons)" id="slimQty" type="number" min="0">
+    <input placeholder="Siberia Edge 13G (Cartons)" id="edgeQty" type="number" min="0">
+  </div>
+</div>
 <div class="section">
 <div class="label">Follow-up</div>
 <div class="grid full">
@@ -358,10 +372,14 @@ function submitForm() {
     province: document.getElementById('province').value,
     timeline: document.getElementById('timeline').value,
     interests,
-     wholesalers: wholesalers.join(', '),
+    wholesalers: wholesalers.join(', '),
     rating,
+    storeNumber: document.getElementById('storeNumber').value,
+    siberiaSlim13g: document.getElementById('slimQty').value,
+    siberiaEdge13g: document.getElementById('edgeQty').value,
     followup: document.getElementById('followup').value,
     notes: document.getElementById('notes').value
+    
   };
 
   // Build URL with ? before params
